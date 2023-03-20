@@ -1,0 +1,25 @@
+@startuml actions-secrets
+actor User <<developer>> as d
+
+d "LDAP"-> g
+
+rectangle github as g{
+    rectangle Repo {
+        rectangle action as a
+    }
+}
+rectangle Vault as v {
+    usecase ssh as "secret/mystuff
+    --
+    SSH KEY"
+    usecase p as "policies"
+}
+rectangle Runner as r
+component "user JWT" as jwt
+
+a -down-> r
+jwt -> r
+r -[#red]> p : JWT
+r <-[#red] ssh
+
+@enduml

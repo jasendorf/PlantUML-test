@@ -1,0 +1,920 @@
+## Fun with PantUML
+
+
+@startuml
+title Activity Diagram
+'!theme blueprint
+!theme crt-green
+'!theme crt-amber
+'!theme sketchy
+'!include https://raw.githubusercontent.com/marcneubauer/PlantUML-Base/main/themes/puml-theme-materiaish.txt
+'
+
+(*) --> "ClickServlet.handleRequest()"
+--> "new Page"
+if "Page.onSecurityCheck" then
+  ->[true] "Page.onInit()"
+
+  if "isForward?" then
+   ->[no] "Process controls"
+
+   if "continue processing?" then
+     -->[yes] ===RENDERING===
+   else
+     -->[no] ===REDIRECT_CHECK===
+   endif
+
+  else
+   -->[yes] ===RENDERING===
+  endif
+
+  if "is Post?" then
+    -->[yes] "Page.onPost()"
+    --> "Page.onRender()" as render
+    --> ===REDIRECT_CHECK===
+  else
+    -->[no] "Page.onGet()"
+    --> render
+  endif
+
+else
+  -->[false] ===REDIRECT_CHECK===
+endif
+@enduml
+
+@startuml
+title Activityyyyyyyyyyyyyyyyyyyy Diagram
+
+(*) --> "ClickServlet.handleRequest()"
+--> "new Page"
+
+if "Page.onSecurityCheck" then
+  ->[true] "Page.onInit()"
+
+  if "isForward?" then
+   ->[no] "Process controls"
+
+   if "continue processing?" then
+     -->[yes] ===RENDERING===
+   else
+     -->[no] ===REDIRECT_CHECK===
+   endif
+
+  else
+   -->[yes] ===RENDERING===
+  endif
+
+  if "is Post?" then
+    -->[yes] "Page.onPost()"
+    --> "Page.onRender()" as render
+    --> ===REDIRECT_CHECK===
+  else
+    -->[no] "Page.onGet()"
+    --> render
+  endif
+
+else
+  -->[false] ===REDIRECT_CHECK===
+endif
+
+if "Do redirect?" then
+ ->[yes] "redirect request"
+ --> ==BEFORE_DESTROY===
+else
+ if "Do Forward?" then
+  -left->[yes] "Forward request"
+  --> ==BEFORE_DESTROY===
+ else
+  -right->[no] "Render page template"
+  --> ==BEFORE_DESTROY===
+ endif
+endif
+
+--> "Page.onDestroy()"
+-->(*)
+
+@enduml
+
+
+
+
+@startuml
+'Entities
+'https://plantuml.com/deployment-diagram
+
+actor actor
+actor/ "actor/"
+agent agent
+artifact artifact
+boundary boundary
+card card
+circle circle
+cloud cloud
+collections collections
+component component
+control control
+database database
+entity entity
+file file
+folder folder
+frame frame
+interface interface
+label label
+node node
+package package
+queue queue
+rectangle rectangle
+stack stack
+storage storage
+usecase usecase
+usecase/ "usecase/"
+@enduml
+
+'===Lots of Arrows====>
+@startuml
+title Lots of Arrows
+group Arrows
+    Bob ->x Alice
+    Bob -> Alice
+    Bob ->> Alice
+    Bob -\ Alice
+    Bob \\- Alice
+    Bob //-- Alice
+    Bob ->o Alice
+    Bob o\\-- Alice
+    Bob <- Alice
+    Bob <-> Alice
+    critical oops
+        Bob <-[#green]x Alice
+    end
+end
+@enduml
+
+'Sprites!
+@startuml
+
+!define osaPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons/master
+!include osaPuml/Common.puml
+!include osaPuml/User/all.puml
+!include osaPuml/Hardware/all.puml
+!include osaPuml/Misc/all.puml
+!include osaPuml/Server/all.puml
+!include osaPuml/Site/all.puml
+
+listsprites
+
+@enduml
+
+`Draft with handwritten mode
+@startuml
+title Doing Stuff with PlantUML
+skinparam handwritten true
+
+ThisIs -> ADraft
+
+@enduml
+
+`Network Diagram
+@startuml
+
+!define osaPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons/master
+!include osaPuml/Common.puml
+!include osaPuml/User/all.puml
+!include osaPuml/Hardware/all.puml
+!include osaPuml/Misc/all.puml
+!include osaPuml/Server/all.puml
+!include osaPuml/Site/all.puml
+
+'. Mary is a Developer in the Product team. She has a Windows 10 PC and an Android phone.
+'. Bob is a Manager in the Accounts team. He has Mac and an iPhone.
+'. Ivan is an IT guy who looks after the server.
+'. They connect to the network hub, and via a firewall to the Internet.
+
+skinparam backgroundcolor #473434
+
+' Users
+together {
+osa_user_green_developer(Mary, "Mary", "Product team", "Developer")
+osa_user_green_operations(Ivan, "Ivan", "IT Team", "Server Admin")
+osa_user_green_business_manager(Bob, "Bob", "Accounts team", "Manager")
+}
+
+' Devices
+together {
+osa_laptop(mac, "192.168.1.12", "Mac", "Mac")
+osa_desktop(pc, "192.168.1.10", "Windows 10", "PC")
+osa_iPhone(iphone, "Dynamic IP", "iPhone 11", "Phone")
+osa_iPhone(android, "Dynamic IP", "Android 10", "Phone")
+osa_server(server, "192.168.1.100", "Ubuntu Server 20.04 LTS", "Server")
+}
+
+
+' Network
+
+osa_device_wireless_router(wifiAP, "192.168.1.1", "Network")
+osa_hub(hub, "Office hub", "Hub")
+osa_firewall(firewall, "51.37.24.103", "Network")
+osa_cloud(cloud, "Internet", "Network")
+
+
+Mary -> pc: source code
+Mary --> android: social media
+
+Bob --> mac: financial info
+Bob --> iphone: phone calls
+
+
+Ivan --> server: configuration
+
+iphone <--> wifiAP
+android --> wifiAP
+wifiAP --> hub
+
+server --> hub
+mac --> hub
+pc --> hub
+
+
+hub -left-> firewall
+
+firewall --down--> cloud
+
+footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s Guide to PlantUML
+@enduml
+
+'Entities
+@startuml
+'https://plantuml.com/deployment-diagram
+skinparam backgroundcolor #Lavender
+
+actor actor
+actor/ "actor/"
+agent agent
+artifact artifact
+boundary boundary
+card card
+circle circle
+cloud cloud
+collections collections
+component component
+control control
+database database
+entity entity
+file file
+folder folder
+frame frame
+interface interface
+label label
+node node
+package package
+queue queue
+rectangle rectangle
+stack stack
+storage storage
+usecase usecase
+usecase/ "usecase/"
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+`AWS
+@startuml
+title Doing Stuff with PlantUML
+skinparam backgroundcolor #473434
+
+' skinparam linetype polyline
+ skinparam linetype ortho
+
+'package "AWS Cloud" {
+'EC2(Smadex, "Smadex Service", " ")
+'}
+
+
+'!define awsLib https://github.com/plantuml/plantuml-stdlib/tree/master/awslib
+!include <awslib/AWSCommon>
+'!include <awslib/AWSSimplified.puml>
+!include <awslib/Compute/all.puml>
+'!include <awslib/mobile/all.puml>
+'!include <awslib/general/all.puml>
+'!include <awslib/GroupIcons/all.puml>
+
+listsprites
+
+@enduml
+
+
+
+
+
+`Tip
+@startuml
+title Doing Stuff with PlantUML
+skinparam backgroundcolor #473434
+@enduml
+
+
+
+
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+@enduml
+
+# PlantUMLs
+@startuml
+```
+@startuml
+    'https://plantuml.com/sequence-diagram
+    !include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/bluegray/puml-theme-bluegray.puml
+'!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/superhero/puml-theme-superhero.puml
+'
+    'skinparam responseMessageBelowArrow true
+    skinparam backgroundColor #FFFFFE
+    skinparam ArrowColor #darkgreen
+    skinparam SequenceGroupBodyBackGroundColor transparent
+
+    actor Browser as browser #green
+    box Netlify
+'    box Netlify : <img:https://www.netlify.com/img/press/logos/full-logo-light.png{scale=0.1}>
+        participant backend as "AWS\nƛ"
+    end box
+    box WorldPay
+'    box WorldPay: <img:https://www.salesforce.com/content/dam/web/en_us/www/images/commerce-cloud/partners/worldpay-logo-2.png>
+        participant epro as "eProtect"
+        participant cnp as "cnpApi"
+    end box
+    participant BMI as oms
+    participant epcc as "EPCC"
+
+    autonumber
+
+
+|||
+== Navigate to Checkout Form ==
+    browser -> epcc: Automatically Create Cart and Add Offer Items to Cart.
+    'note left of epcc: EPCC: Cart created.
+    activate browser #lightgray
+    activate epcc #lightblue
+    epcc -> browser : {cart_reference_id}
+    deactivate epcc
+
+
+|||
+    group EPCC Cart Interaction Details
+        browser --> epcc : Create and Add Offer Items to Cart.
+        activate epcc #lightblue
+        group Responses  [error]
+            epcc -[#f07575]> browser: Error Creating/Adding To Cart
+        else success
+            epcc -> browser: {cart_reference_id}
+            deactivate epcc
+        end
+    end
+
+
+|||
+== Enter CC#, CVV into Checkout Form ==
+    browser o-> epro : Tokenize PCI Data
+    activate epro #black
+    epro -> browser : {RegistrationId}
+    note right #gray: RegistrationId is a long length, low-value token,\n MOD10+1 compliant, with no format preservation,\nand a 24 hour lifetime.
+    deactivate epro
+
+    group eProtect Details
+        note right of browser: { cart_reference_id, CC#, CVV }
+        browser -> epro : Tokenize PCI Data
+        activate epro #black
+        group Responses [error]
+            epro -[#f07575]> browser : {response.code, response.message}
+            note right #gray: Error Messages shown near iFrame fields.
+        else success
+            epro -> browser : {paypageRegistrationId, response.expMonth, response.expYear, response.type}
+            deactivate epro
+            note right #gray: paypageRegistrationId is a long length,\nlow-value token, MOD10+1 compliant,\nwith no format preservation, and a 24h life.
+        end
+    end
+
+
+|||
+== Click "Place Order" ==
+    'browser -->o epcc : Set Shipping/Billing Information
+    'note left of epcc: EPCC order status: processing
+    browser o-> backend : Place Order.
+    activate backend #00ac99
+
+    group Place Order Details
+       note right of browser: { Addresses, Consents, cart_reference_id, Authorization }
+
+        browser -> backend : Place Order: <b>POST /.netlify/functions/placeOrder</b>
+        group Responses [error]
+            backend -[#f07575]> browser: HTTP: <b>500</b> Error.
+            note right #gray: Error Message\nError Code
+        else success
+            backend -> browser : HTTP: <b>201</b> Order Created.
+            note right #gray: Order Id
+        end
+    end
+
+
+
+   backend -> epcc : Convert Cart to Order.
+    'note  left of epcc: EPCC Order status: incomplete
+    activate epcc #lightblue
+    epcc -> backend : {Order Id}
+    deactivate epcc
+
+    group EPCC Order Create Details
+        backend --> epcc : Convert Cart to Order
+        activate epcc #lightblue
+        group Responses  [error]
+            epcc -[#f07575]> backend: Error Converting Cart to Order
+        else success
+            epcc -> backend: {Order Id}
+            deactivate epcc
+        end
+    end
+
+|||
+== Payment Authorization ==
+    backend -> cnp : WorldPay cnpApi: Authorize this order.
+    activate cnp #fceca2
+    cnp -> backend : {OmniToken, Authorization}
+    note right #gray:  High-value token, reusable.\nAuthorization good for 7-10days
+    deactivate cnp
+
+    group cnpApi Details
+    note right of backend: { RegistrationID, Address(es), CC Expiration, Amount }
+    backend -> cnp : WorldPay cnpApi: Authorize this order. (via OpenAccess)
+        group Responses [error]
+            activate cnp #fceca2
+            cnp -[#f07575]> backend : Payment Error {Error Code/Message?}
+'            note right #gray: Error Code?
+        else success
+            cnp -> backend : {response, message, authCode, cnpToken}
+'            note right: OmniToken, Authorization
+            deactivate cnp
+        end
+    end
+
+
+|||
+== Fulfillment ==
+    backend -> oms : BMI API: NEWORDER
+    activate oms #lightgreen
+    oms -> backend : {BMI OrderNumber}
+    deactivate oms
+
+    group BMI Details
+        note right of backend: { OmniToken, Address(es), OfferCode, KeyCode, Totals, Consents }
+        backend -> oms : Call BMI API: NEWORDER
+        group Responses [error]
+            activate oms #lightgreen
+            oms -[#f07575]> backend : {ErrorCode, ErrorText}
+'            note right: {\nErrorCode,\nErrorText \n}
+        else success
+            oms -> backend : {Status, OrderNumber, Payment, SalesTax}
+            deactivate oms
+        end
+    end
+
+
+|||
+== EPCC ==
+    backend -> epcc : EPCC: Update Order Details.
+    activate epcc #lightblue
+'    note left: {\n  BMI Order_Id, Omni_Token \n Offer Code, Source Code,\n Consents, Address(es)\n}
+'    note left of epcc: Order Status: complete
+
+    epcc -> backend : Success.
+    deactivate epcc
+
+    group EPCC Backend Interaction Details
+        note right of backend: { Addresses, Consents, BMI Order_ID, Authorization }
+        backend -> epcc : EPCC: Update Order Details.
+        activate epcc #lightblue
+        group Responses  [error]
+            epcc -[#f07575]> backend: Error Updating Order
+            activate backend #f07575
+'            backend --[#f07575]> backend: Continue Process.
+            deactivate backend
+        else success
+            epcc -> backend: Success.
+            deactivate epcc
+            activate backend #darkgreen
+'            backend --[#darkgreen]> backend: Continue Process.
+            deactivate backend
+        end
+    end
+
+    backend ->o browser : Success.
+    deactivate backend
+    browser -> browser : Order success page.
+    deactivate browser
+
+@enduml
+
+
+---
+@startuml
+    'https://plantuml.com/sequence-diagram
+    !include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/bluegray/puml-theme-bluegray.puml
+'!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/superhero/puml-theme-superhero.puml
+'
+    'skinparam responseMessageBelowArrow true
+    skinparam backgroundColor #FFFFFE
+    skinparam ArrowColor #darkgreen
+    skinparam SequenceGroupBodyBackGroundColor transparent
+
+    actor Browser as browser #green
+    box Netlify
+'    box Netlify : <img:https://www.netlify.com/img/press/logos/full-logo-light.png{scale=0.1}>
+        participant backend as "AWS\nƛ"
+    end box
+    box WorldPay
+'    box WorldPay: <img:https://www.salesforce.com/content/dam/web/en_us/www/images/commerce-cloud/partners/worldpay-logo-2.png>
+        participant epro as "eProtect"
+        participant cnp as "cnpApi"
+    end box
+    participant BMI as oms
+    participant epcc as "EPCC"
+
+    autonumber
+
+
+|||
+== Navigate to Checkout Form ==
+    browser -> epcc: Automatically Create Cart and Add Offer Items to Cart.
+    'note left of epcc: EPCC: Cart created.
+    activate browser #lightgray
+    activate epcc #lightblue
+    epcc -> browser : {cart_reference_id}
+    deactivate epcc
+
+
+|||
+'    group EPCC Cart Interaction Details
+'        browser --> epcc : Create and Add Offer Items to Cart.
+'        activate epcc #lightblue
+'        group Responses  [error]
+'            epcc -[#f07575]> browser: Error Creating/Adding To Cart
+'        else success
+'            epcc -> browser: {cart_reference_id}
+'            deactivate epcc
+'        end
+'    end
+
+
+|||
+== Enter CC#, CVV into Checkout Form ==
+    browser o-> epro : Tokenize PCI Data
+    activate epro #black
+    epro -> browser : {RegistrationId}
+    note right #gray: RegistrationId is a long length, low-value token,\n MOD10+1 compliant, with no format preservation,\nand a 24 hour lifetime.
+    deactivate epro
+
+'    group eProtect Details
+'        note right of browser: { cart_reference_id, CC#, CVV }
+'        browser -> epro : Tokenize PCI Data
+'        activate epro #black
+'        group Responses [error]
+'            epro -[#f07575]> browser : {response.code, response.message}
+'            note right #gray: Error Messages shown near iFrame fields.
+'        else success
+'            epro -> browser : {paypageRegistrationId, response.expMonth, response.expYear, response.type}
+'            deactivate epro
+'            note right #gray: paypageRegistrationId is a long length,\nlow-value token, MOD10+1 compliant,\nwith no format preservation, and a 24h life.
+'        end
+'    end
+
+
+|||
+== Click "Place Order" ==
+    'browser -->o epcc : Set Shipping/Billing Information
+    'note left of epcc: EPCC order status: processing
+    browser o-> backend : Place Order.
+    activate backend #00ac99
+
+'    group Place Order Details
+'       note right of browser: { Addresses, Consents, cart_reference_id, Authorization }
+'
+'        browser -> backend : Place Order: <b>POST /.netlify/functions/placeOrder</b>
+'        group Responses [error]
+'            backend -[#f07575]> browser: HTTP: <b>500</b> Error.
+'            note right #gray: Error Message\nError Code
+'        else success
+'            backend -> browser : HTTP: <b>201</b> Order Created.
+'            note right #gray: Order Id
+'        end
+'    end
+
+
+
+   backend -> epcc : Convert Cart to Order.
+    'note  left of epcc: EPCC Order status: incomplete
+    activate epcc #lightblue
+    epcc -> backend : {Order Id}
+    deactivate epcc
+
+'    group EPCC Order Create Details
+'        backend --> epcc : Convert Cart to Order
+'        activate epcc #lightblue
+'        group Responses  [error]
+'            epcc -[#f07575]> backend: Error Converting Cart to Order
+'        else success
+'            epcc -> backend: {Order Id}
+'            deactivate epcc
+'        end
+'    end
+
+|||
+== Payment Authorization ==
+    backend -> cnp : WorldPay cnpApi: Authorize this order.
+    activate cnp #fceca2
+    cnp -> backend : {OmniToken, Authorization}
+    note right #gray:  High-value token, reusable.\nAuthorization good for 7-10days
+    deactivate cnp
+
+'    group cnpApi Details
+'    note right of backend: { RegistrationID, Address(es), CC Expiration, Amount }
+'    backend -> cnp : WorldPay cnpApi: Authorize this order. (via OpenAccess)
+'        group Responses [error]
+'            activate cnp #fceca2
+'            cnp -[#f07575]> backend : Payment Error {Error Code/Message?}
+''            note right #gray: Error Code?
+'        else success
+'            cnp -> backend : {response, message, authCode, cnpToken}
+''            note right: OmniToken, Authorization
+'            deactivate cnp
+'        end
+'    end
+
+
+|||
+== Fulfillment ==
+    backend -> oms : BMI API: NEWORDER
+    activate oms #lightgreen
+    oms -> backend : {BMI OrderNumber}
+    deactivate oms
+
+'    group BMI Details
+'        note right of backend: { OmniToken, Address(es), OfferCode, KeyCode, Totals, Consents }
+'        backend -> oms : Call BMI API: NEWORDER
+'        group Responses [error]
+'            activate oms #lightgreen
+'            oms -[#f07575]> backend : {ErrorCode, ErrorText}
+''            note right: {\nErrorCode,\nErrorText \n}
+'        else success
+'            oms -> backend : {Status, OrderNumber, Payment, SalesTax}
+'            deactivate oms
+'        end
+'    end
+
+
+|||
+== EPCC ==
+    backend -> epcc : EPCC: Update Order Details.
+    activate epcc #lightblue
+'    note left: {\n  BMI Order_Id, Omni_Token \n Offer Code, Source Code,\n Consents, Address(es)\n}
+'    note left of epcc: Order Status: complete
+
+    epcc -> backend : Success.
+    deactivate epcc
+
+'    group EPCC Backend Interaction Details
+'        note right of backend: { Addresses, Consents, BMI Order_ID, Authorization }
+'        backend -> epcc : EPCC: Update Order Details.
+'        activate epcc #lightblue
+'        group Responses  [error]
+'            epcc -[#f07575]> backend: Error Updating Order
+'            activate backend #f07575
+''            backend --[#f07575]> backend: Continue Process.
+'            deactivate backend
+'        else success
+'            epcc -> backend: Success.
+'            deactivate epcc
+'            activate backend #darkgreen
+''            backend --[#darkgreen]> backend: Continue Process.
+'            deactivate backend
+'        end
+'    end
+
+    backend ->o browser : Success.
+    deactivate backend
+    browser -> browser : Order success page.
+    deactivate browser
+
+@enduml
+
+---
+
+@startuml
+    'https://plantuml.com/sequence-diagram
+    !include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/bluegray/puml-theme-bluegray.puml
+'!includeurl https://raw.githubusercontent.com/matthewjosephtaylor/plantuml-style/master/style.pu
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/superhero/puml-theme-superhero.puml
+'
+    'skinparam responseMessageBelowArrow true
+    skinparam backgroundColor #FFFFFE
+    skinparam ArrowColor #darkgreen
+    skinparam SequenceGroupBodyBackGroundColor transparent
+
+    actor Browser as browser #green
+    box Netlify
+'    box Netlify : <img:https://www.netlify.com/img/press/logos/full-logo-light.png{scale=0.1}>
+        participant backend as "AWS\nƛ"
+    end box
+'    box WorldPay
+'    box WorldPay: <img:https://www.salesforce.com/content/dam/web/en_us/www/images/commerce-cloud/partners/worldpay-logo-2.png>
+'        participant epro as "eProtect"
+'        participant cnp as "cnpApi"
+'    end box
+'    participant BMI as oms
+'    participant epcc as "EPCC"
+'
+'    autonumber
+'
+'
+'|||
+'== Navigate to Checkout Form ==
+'    browser -> epcc: Automatically Create Cart and Add Offer Items to Cart.
+'    'note left of epcc: EPCC: Cart created.
+'    activate browser #lightgray
+'    activate epcc #lightblue
+'    epcc -> browser : {cart_reference_id}
+'    deactivate epcc
+'
+'
+'|||
+'    group EPCC Cart Interaction Details
+'        browser --> epcc : Create and Add Offer Items to Cart.
+'        activate epcc #lightblue
+'        group Responses  [error]
+'            epcc -[#f07575]> browser: Error Creating/Adding To Cart
+'        else success
+'            epcc -> browser: {cart_reference_id}
+'            deactivate epcc
+'        end
+'    end
+'
+'
+'|||
+'== Enter CC#, CVV into Checkout Form ==
+'    browser o-> epro : Tokenize PCI Data
+'    activate epro #black
+'    epro -> browser : {RegistrationId}
+'    note right #gray: RegistrationId is a long length, low-value token,\n MOD10+1 compliant, with no format preservation,\nand a 24 hour lifetime.
+'    deactivate epro
+'
+'    group eProtect Details
+'        note right of browser: { cart_reference_id, CC#, CVV }
+'        browser -> epro : Tokenize PCI Data
+'        activate epro #black
+'        group Responses [error]
+'            epro -[#f07575]> browser : {response.code, response.message}
+'            note right #gray: Error Messages shown near iFrame fields.
+'        else success
+'            epro -> browser : {paypageRegistrationId, response.expMonth, response.expYear, response.type}
+'            deactivate epro
+'            note right #gray: paypageRegistrationId is a long length,\nlow-value token, MOD10+1 compliant,\nwith no format preservation, and a 24h life.
+'        end
+'    end
+'
+
+|||
+== Click "Place Order" ==
+    'browser -->o epcc : Set Shipping/Billing Information
+    'note left of epcc: EPCC order status: processing
+'    browser o-> backend : Place Order.
+
+    group Place Order Details
+       note right of browser: { Addresses, Consents, cart_reference_id, Authorization }
+
+        browser -> backend : Place Order: <b>POST /.netlify/functions/placeOrder</b>
+    activate backend #00ac99
+        group Responses [error]
+            backend -[#f07575]> browser: HTTP: <b>500</b> Error.
+            note right #gray: Error Message\nError Code
+        else success
+            backend -> browser : HTTP: <b>201</b> Order Created.
+deactivate backend
+            note right #gray: Order Id
+        end
+    end
+
+'
+'   backend -> epcc : Convert Cart to Order.
+'    'note  left of epcc: EPCC Order status: incomplete
+'    activate epcc #lightblue
+'    epcc -> backend : {Order Id}
+'    deactivate epcc
+'
+'    group EPCC Order Create Details
+'        backend --> epcc : Convert Cart to Order
+'        activate epcc #lightblue
+'        group Responses  [error]
+'            epcc -[#f07575]> backend: Error Converting Cart to Order
+'        else success
+'            epcc -> backend: {Order Id}
+'            deactivate epcc
+'        end
+'    end
+'
+'|||
+'== Payment Authorization ==
+'    backend -> cnp : WorldPay cnpApi: Authorize this order.
+'    activate cnp #fceca2
+'    cnp -> backend : {OmniToken, Authorization}
+'    note right #gray:  High-value token, reusable.\nAuthorization good for 7-10days
+'    deactivate cnp
+'
+'    group cnpApi Details
+'    note right of backend: { RegistrationID, Address(es), CC Expiration, Amount }
+'    backend -> cnp : WorldPay cnpApi: Authorize this order. (via OpenAccess)
+'        group Responses [error]
+'            activate cnp #fceca2
+'            cnp -[#f07575]> backend : Payment Error {Error Code/Message?}
+''            note right #gray: Error Code?
+'        else success
+'            cnp -> backend : {response, message, authCode, cnpToken}
+''            note right: OmniToken, Authorization
+'            deactivate cnp
+'        end
+'    end
+'
+'
+'|||
+'== Fulfillment ==
+'    backend -> oms : BMI API: NEWORDER
+'    activate oms #lightgreen
+'    oms -> backend : {BMI OrderNumber}
+'    deactivate oms
+'
+'    group BMI Details
+'        note right of backend: { OmniToken, Address(es), OfferCode, KeyCode, Totals, Consents }
+'        backend -> oms : Call BMI API: NEWORDER
+'        group Responses [error]
+'            activate oms #lightgreen
+'            oms -[#f07575]> backend : {ErrorCode, ErrorText}
+''            note right: {\nErrorCode,\nErrorText \n}
+'        else success
+'            oms -> backend : {Status, OrderNumber, Payment, SalesTax}
+'            deactivate oms
+'        end
+'    end
+'
+'
+'|||
+'== EPCC ==
+'    backend -> epcc : EPCC: Update Order Details.
+'    activate epcc #lightblue
+''    note left: {\n  BMI Order_Id, Omni_Token \n Offer Code, Source Code,\n Consents, Address(es)\n}
+''    note left of epcc: Order Status: complete
+'
+'    epcc -> backend : Success.
+'    deactivate epcc
+'
+'    group EPCC Backend Interaction Details
+'        note right of backend: { Addresses, Consents, BMI Order_ID, Authorization }
+'        backend -> epcc : EPCC: Update Order Details.
+'        activate epcc #lightblue
+'        group Responses  [error]
+'            epcc -[#f07575]> backend: Error Updating Order
+'            activate backend #f07575
+''            backend --[#f07575]> backend: Continue Process.
+'            deactivate backend
+'        else success
+'            epcc -> backend: Success.
+'            deactivate epcc
+'            activate backend #darkgreen
+''            backend --[#darkgreen]> backend: Continue Process.
+'            deactivate backend
+'        end
+'    end
+'
+'    backend ->o browser : Success.
+'    deactivate backend
+'    browser -> browser : Order success page.
+'    deactivate browser
+
+@enduml
+```
+---
+
+@enduml
